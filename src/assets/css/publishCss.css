@@ -1,0 +1,8 @@
+/*水平居中*/
+.centerHorizontally{
+  margin: 0 auto;
+}
+
+.noNewLine{
+  display: inline-block;
+}
