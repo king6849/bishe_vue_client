@@ -18,3 +18,8 @@ export function date_format_filter(date) {
 
     return [year, month, day].join('-');
 }
+
+//课程剩余数量
+export function computed_reminder(amNum,pmNum){
+    return (amNum+pmNum)
+}

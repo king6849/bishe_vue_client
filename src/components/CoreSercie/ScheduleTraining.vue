@@ -15,20 +15,21 @@
           <p>课程分类：游泳</p>
           <p>咨询电话： 400-968-9396</p>
           <p>上课地点： [上海体育学院游泳馆]上海杨浦长海路345号</p>
-          <p>学费：￥{{ showTuition }}</p>
-
-          班级：<br>
-          <button class="btn btn-light noNewLine select_class_btn" id="class_1" v-on:click="selectClass">一对一7课时</button>
-          <button class="btn btn-light noNewLine select_class_btn" id="class_2" v-on:click="selectClass">一对二7课时</button>
-          <button class="btn btn-light noNewLine select_class_btn" id="class_3" v-on:click="selectClass">一对三7课时</button>
-          <button class="btn btn-light noNewLine select_class_btn" id="class_4" v-on:click="selectClass">一对一10课时
-          </button>
-          <button class="btn btn-light noNewLine select_class_btn" id="class_5" v-on:click="selectClass">一对二10课时
-          </button>
-          <button class="btn btn-light noNewLine select_class_btn" id="class_6" v-on:click="selectClass">一对三10课时
-          </button>
-          <br>
-          <button class="btn btn-danger rounded yuyueBtn" v-on:click="orderNow">立即报名</button>
+          <!--          <p>学费：￥{{ showTuition }}</p>-->
+          <!--          <p>报名时间：2021-01-25 00:00:00 至2021-01-28 00:00:00</p>-->
+          <!--          <p>下次报名时间：2021-02-2 00:00:00 至2021-02-5 00:00:00</p>-->
+          <!--          班级：<br>-->
+          <!--          <button class="btn btn-light noNewLine select_class_btn" id="class_1" v-on:click="selectClass">一对一7课时</button>-->
+          <!--          <button class="btn btn-light noNewLine select_class_btn" id="class_2" v-on:click="selectClass">一对二7课时</button>-->
+          <!--          <button class="btn btn-light noNewLine select_class_btn" id="class_3" v-on:click="selectClass">一对三7课时</button>-->
+          <!--          <button class="btn btn-light noNewLine select_class_btn" id="class_4" v-on:click="selectClass">一对一10课时-->
+          <!--          </button>-->
+          <!--          <button class="btn btn-light noNewLine select_class_btn" id="class_5" v-on:click="selectClass">一对二10课时-->
+          <!--          </button>-->
+          <!--          <button class="btn btn-light noNewLine select_class_btn" id="class_6" v-on:click="selectClass">一对三10课时-->
+          <!--          </button>-->
+          <!--          <br>-->
+          <!--          <button class="btn btn-danger rounded yuyueBtn" v-on:click="orderNow">立即报名</button>-->
         </div>
       </div>
     </div>
@@ -61,6 +62,23 @@
           2. 前3次课(含第3次)内提出退款申请,我们将扣除已上课程费用,并加收一次课学费的服务费后,退回余下课款;第4次课(含第4次)后恕不再接受退款.
           3. 对于超过有效期的学员,恕不受理任何理由退款申请.
         </p>
+
+        <b>关于报名时间：</b>
+        <p>1.七课时培训班报名时间</p>
+        <p>报名时间：2021-01-25 00:00:00 至2021-01-28 00:00:00</p>
+        <p>下次报名时间：2021-02-2 00:00:00 至2021-02-5 00:00:00</p>
+
+        <p>2.十课时培训班报名时间</p>
+        <p>报名时间：2021-01-25 00:00:00 至2021-01-28 00:00:00</p>
+        <p>下次报名时间：2021-02-2 00:00:00 至2021-02-5 00:00:00</p>
+
+        <p>3.成人普通班培训班报名时间</p>
+        <p>报名时间：2021-01-25 00:00:00 至2021-01-28 00:00:00</p>
+        <p>下次报名时间：2021-02-2 00:00:00 至2021-02-5 00:00:00</p>
+
+        <p>4.未成人普通班培训班报名时间</p>
+        <p>报名时间：2021-01-25 00:00:00 至2021-01-28 00:00:00</p>
+        <p>下次报名时间：2021-02-2 00:00:00 至2021-02-5 00:00:00</p>
         <h4 class="detail_title">开设班级：</h4>
         <table class="table table-bordered">
           <thead>
@@ -69,38 +87,35 @@
             <th scope="col">开班时间</th>
             <th scope="col">上课地点</th>
             <th scope="col">学费</th>
+            <th scope="col">上课时间</th>
+            <th scope="col">剩余容量</th>
             <th scope="col"></th>
           </tr>
           </thead>
           <tbody>
-          <tr>
-            <td>一对一7课时/面授</td>
-            <td>滚动开班</td>
-            <td>上海浦东新羽山路9号源深体育中心</td>
-            <td>1000</td>
-            <td class="text-right">
-              <button class="btn btn-info noNewLine audition">试听</button>
-              <button class="btn btn-info noNewLine audition">报名</button>
+          <tr v-for="(item,index) in classInfoList " :key="index">
+            <td>{{ item.name }}</td>
+            <td>{{ item.classStartTime }}至{{ item.classEndTime }}</td>
+            <td>{{ item.space }}</td>
+            <td>{{ item.price }}</td>
+            <td>
+              <el-select v-model="classInfoList[index].u_time" placeholder="请选择上课时间">
+                <el-option
+                    v-for="item in classInfoList[index]['remainder']"
+                    :key="item.id"
+                    :label="item.classLabel"
+                    :value="item.id">
+                  <span style="float: left">{{ item.classLabel }}</span>
+                  <span class="remainder_span">剩余：{{ item.remainder }}</span>
+                  <span class="remainder_span" style="margin-right: 5px;">{{ item.time }}</span>
+                </el-option>
+              </el-select>
             </td>
-          </tr>
-          <tr>
-            <td>一对一7课时/面授</td>
-            <td>滚动开班</td>
-            <td>上海浦东新羽山路9号源深体育中心</td>
-            <td>1000</td>
-            <td class="text-right">
-              <button class="btn btn-info noNewLine audition">试听</button>
-              <button class="btn btn-info noNewLine audition">报名</button>
+            <td>
+              {{ item.remainder[0]['remainder'] + item.remainder[1]['remainder'] }}
             </td>
-          </tr>
-          <tr>
-            <td>一对一7课时/面授</td>
-            <td>滚动开班</td>
-            <td>上海浦东新羽山路9号源深体育中心</td>
-            <td>1000</td>
             <td class="text-right">
-              <button class="btn btn-info noNewLine audition">试听</button>
-              <button class="btn btn-info noNewLine audition">报名</button>
+              <button @click="orderNow" :id="item.id+'_class'" class="btn btn-info noNewLine audition">报名</button>
             </td>
           </tr>
           </tbody>
@@ -182,13 +197,17 @@
 
 <script>
 import HeaderNav from "@/components/Home/HeaderNav";
-import requestService, {getRequest} from "@/utils/requestService";
+import requestService, {getRequest, put} from "@/utils/requestService";
+import DateUtil from "@/js/DateUtil";
+import {computed_reminder} from "@/filters/myFilter";
 
 export default {
   name: "ScheduleTraining",
+  filters: {computed_reminder},
   components: {
     HeaderNav
   },
+
   data() {
     return {
       showTuition: 500,
@@ -199,52 +218,78 @@ export default {
       numbers: 1,
       reservation: {
         instructor: ''
-      }
+      },
+      classInfoList: [
+        // {
+        //   //课程id
+        //   id: 1,
+        //   name: '一对一7课时/面授',
+        //   //开课时间
+        //   classTime: '10:30-12:00',
+        //   space: '上海浦东新羽山路9号源深体育中心',
+        //   price: 500,
+        //   // 客户选择上课的时间段
+        //   uTime: 1,
+        //   trainningTime: '2021-01-25',
+        //   remainder: [{label: "上午", time: "10:30-12:00", id: 1, remainder: 1}, {
+        //     label: "下午",
+        //     time: '14:00-16:00',
+        //     id: '2',
+        //     remainder:1
+        //   }]
+        //
+        // }
+      ],
+
+      trainning: {
+        time: ''
+      },
+      classTime: [{label: "上午", time: "10:30-12:00", value: 1, remainder: 1}, {
+        label: "下午",
+        time: '14:00-16:00',
+        value: '2',
+        remainder: 1
+      },],
     }
   },
   created() {
+    this.initTrainningObj()
     /*加载价格表*/
-    // this.initTuition()
+    this.initClassInfoList()
   },
 
   methods: {
-    /*选着课时*/
-    selectClass(event) {
-      let classId = event.target.id
-      this.className = classId;
-      if (classId === "class_1") {
-        this.showTuition = this.tuition[0];
-      } else if (classId === "class_2") {
-        this.showTuition = this.tuition[1]
-      } else if (classId === "class_3") {
-        this.showTuition = this.tuition[2]
-      } else if (classId === "class_4") {
-        this.showTuition = this.tuition[3]
-      } else if (classId === "class_5") {
-        this.showTuition = this.tuition[4]
-      } else {
-        this.showTuition = this.tuition[5]
-      }
-      console.log(event.target.id)
+
+    /*立即下单*/
+    orderNow(event) {
+      let id = Number(event.target.id.split('_')[0])
+      let param = {cid: id, time: this.classInfoList[id - 1]['u_time']}
+      console.log(param)
+      put(requestService.BaseHost + "/coreService/train", param, localStorage.getItem("token")).then(res => {
+        alert(res['msg'])
+        // console.log(res)
+      }).catch(err => {
+        console.log(err)
+      })
+
     },
 
-    //  人数输入框监听
-    checkNumbers() {
-      if (this.numbers <= 1) {
-        this.numbers = 1
-      }
-    },
-    /*立即下单*/
-    orderNow() {
-      console.log("你订购了 " + this.className + " 课程，花费 " + this.showTuition)
-    },
     /*初始化价格表*/
-    initTuition() {
-      getRequest(requestService.ConsumerHost + "/price", "").then(res => {
-        console.log(res)
+    initClassInfoList() {
+      getRequest(requestService.BaseHost + "/coreService/classInfo", "").then(res => {
+        let data = res['data']
+        for (let index of data) {
+          index['u_time'] = 1
+          this.classInfoList.push(index)
+        }
+        console.log(data)
       }).catch(err => {
-        console.log("ScheduleTraining initTuition err is " + err)
+        console.log(err)
       })
+
+    },
+    initTrainningObj() {
+      this.$set(this.trainning, "time", DateUtil.methods.getdate())
     }
   }
 }
@@ -262,17 +307,6 @@ export default {
   margin: 25px;
 }
 
-/*班级选择*/
-.select_class_btn {
-  margin: 0 2px;
-  border: 1px solid #dee2e6;
-
-}
-
-/*立即预约*/
-.yuyueBtn {
-  margin-top: 15px;
-}
 
 /*具体细节*/
 /*标题*/
@@ -332,11 +366,6 @@ ul.ul-join li {
   margin: 0 0 10px 19px;
 }
 
-/*!*不换行*!*/
-/*.noNewLine {*/
-/*  display: inline-block;*/
-/*  vertical-align: top;*/
-/*}*/
 
 /*水平居中*/
 .centerHorizontallis {
@@ -348,4 +377,12 @@ menu, ol, ul {
   margin: 0;
   padding: 0;
 }
+
+/*剩余容量*/
+.remainder_span {
+  float: right;
+  color: #8492a6;
+  font-size: 13px
+}
+
 </style>

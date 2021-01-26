@@ -54,6 +54,7 @@ export function get(url, params, serviceSuccessCallBack, serviceErrorCallBack) {
     });
 }
 
+
 export function getRequest(url, params) {
     return new Promise((resolve, reject) => {
         axios.get(url, {
@@ -137,7 +138,7 @@ export function putRequest(url, data = {}) {
     })
 }
 
-export function putRequestWithToken(url, data = {}, token) {
+export function putRequestWithToken(url, data, token) {
     let options = {
         method: 'PUT',
         headers: {
@@ -157,33 +158,25 @@ export function putRequestWithToken(url, data = {}, token) {
     })
 }
 
-//httpRequest
-export function httpRequest(method, url, data, serviceSuccessCallBack, serviceErrorCallBack) {
-    let options = {
-        method: method,
-        headers: header,
-        data: data,
-        url: url
+export function put(url, data = {}, token) {
+    let config = {
+        method: 'PUT',
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'Content-Type': 'application/json;charset=UTF-8',
+            "token": token
+        },
     };
     return new Promise((resolve, reject) => {
-        axios(options).then(res => {
-            if (res.status === 200) {
-                if (serviceSuccessCallBack == null) {
-                    console.log('serviceSuccessCallback');
-                } else {
-                    serviceSuccessCallBack(res);
-                    console.log(res);
-                }
-            } else {
-                serviceSuccessCallBack(res);
-            }
-            resolve(res);
-        })
-            .catch(function (err) {
-                reject(err);
-                serviceErrorCallBack(err);
-            })
-    })
+
+            axios.put(url, data, config)
+                .then(response => {
+                    resolve(response.data)
+                }, err => {
+                    reject(err)
+                })
+        }
+    )
 }
 
 export function deleteRequest(url, params = {}) {
@@ -195,6 +188,36 @@ export function deleteRequest(url, params = {}) {
         })
     })
 }
+
+//httpRequest
+// export function httpRequest(method, url, data, serviceSuccessCallBack, serviceErrorCallBack) {
+//     let options = {
+//         method: method,
+//         headers: header,
+//         data: data,
+//         url: url
+//     };
+//     return new Promise((resolve, reject) => {
+//         axios(options).then(res => {
+//             if (res.status === 200) {
+//                 if (serviceSuccessCallBack == null) {
+//                     console.log('serviceSuccessCallback');
+//                 } else {
+//                     serviceSuccessCallBack(res);
+//                     console.log(res);
+//                 }
+//             } else {
+//                 serviceSuccessCallBack(res);
+//             }
+//             resolve(res);
+//         })
+//             .catch(function (err) {
+//                 reject(err);
+//                 serviceErrorCallBack(err);
+//             })
+//     })
+// }
+
 
 
 

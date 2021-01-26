@@ -37,6 +37,7 @@ export default {
             let date = this.dateObj
             return date.getWeak()
         },
+
         getCurrentDate() {
             let date = this.dateObj
             let strDate = date.getDate();
